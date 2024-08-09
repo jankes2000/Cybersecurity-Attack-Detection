@@ -1,7 +1,21 @@
-# Cybersecurity-Attack-Detection
-Cybersecurity Attack Detection for final MLOps Zoomcamp project
+# Setup
 
-CCCS-CIC-AndMal2020-00-Cleaning-Static
-https://www.unb.ca/cic/datasets/andmal2020.html
+1. Clone repo:
 
-The project aims to develop a machine learning model to detect Android malware using network traffic data. This involves preprocessing the data, training a model, deploying it to the cloud, and setting up a full MLOps pipeline for continuous integration, deployment, and monitoring.
+   ```
+   git clone https://github.com/mage-ai/mlops.git
+   ```
+
+1. Change directory into the cloned repo:
+
+   ```
+   cd mlops
+   ```
+
+1. Launch Mage and the database service (PostgreSQL):
+
+   ```
+   ./scripts/start.sh
+   ```
+
+1. Open [`http://localhost:6789`](http://localhost:6789) in your browser.
