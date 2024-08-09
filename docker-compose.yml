@@ -38,6 +38,18 @@ services:
     restart: always
     networks:
       - app-network
+
+
+  mlflow:
+     image: ghcr.io/mlflow/mlflow:v2.0.1
+     environment:
+       - BACKEND_STORE_URI=sqlite:///mlflow.db
+       - ARTIFACT_ROOT=/mlflow/artifacts
+       - MLFLOW_TRACKING_URI=http://localhost
+     ports:
+       - "5000:5000"
+     volumes:
+       - ./mlflow:/mlflow
 networks:
   app-network:
     driver: bridge
