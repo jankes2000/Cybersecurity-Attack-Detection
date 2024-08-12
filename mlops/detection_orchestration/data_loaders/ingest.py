@@ -1,3 +1,4 @@
+import os
 import requests
 from io import BytesIO
 from typing import List
@@ -12,17 +13,18 @@ if 'data_loader' not in globals():
 def ingest_files(**kwargs) -> pd.DataFrame:
     dfs: List[pd.DataFrame] = []
 
-    for year, months in [(2024, (1, 3))]:
-        for i in range(*months):
-            response = requests.get(
-                'https://github.com/mage-ai/datasets/raw/master/taxi/green'
-                f'/{year}/{i:02d}.parquet'
-            )
-
-            if response.status_code != 200:
-                raise Exception(response.text)
-
-            df = pd.read_parquet(BytesIO(response.content))
-            dfs.append(df)
-
-    return pd.concat(dfs)
+    # Ścieżka do katalogu, w którym znajduje się plik CSV
+    base_dir = '/home/src/Data'  # Zaktualizuj tę ścieżkę
+    filename = 'train_set.csv'  # Stała nazwa pliku CSV
+    file_path = os.path.join(base_dir, filename)
+    
+    # Sprawdź, czy plik istnieje
+    if not os.path.isfile(file_path):
+        raise FileNotFoundError(f"Plik {file_path} nie istnieje.")
+    
+    # Wczytaj dane CSV do DataFrame
+    df = pd.read_csv(file_path)
+    dfs.append(df)
+    
+    # Połącz wszystkie DataFrame'y (w tym przypadku tylko jeden)
+    return pd.concat(dfs, ignore_index=True)
