@@ -1,6 +1,6 @@
-#Project
+# Project
 Cybersecurity Threat Detection
-#Description
+# Description
 Cyberescurity is important
-#Architecture
+# Architecture
 Components
