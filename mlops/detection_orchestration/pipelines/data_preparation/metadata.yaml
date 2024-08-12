@@ -55,7 +55,7 @@ blocks:
   language: python
   name: Build
   retry_config: null
-  status: executed
+  status: updated
   timeout: null
   type: data_exporter
   upstream_blocks:
@@ -88,7 +88,8 @@ uuid: data_preparation
 variables:
   split_on_feature: lpep_pickup_datetime
   split_on_feature_value: '2024-02-01'
-  target: duration
+  target: Label
+  train_size: 0.7
 variables_dir: /home/src/mage_data/detection_orchestration
 widgets:
 - all_upstream_blocks_executed: true

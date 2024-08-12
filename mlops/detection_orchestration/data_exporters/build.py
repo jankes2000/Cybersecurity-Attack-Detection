@@ -6,6 +6,7 @@ from sklearn.base import BaseEstimator
 
 from mlops.utils.data_preparation.encoders import vectorize_features
 from mlops.utils.data_preparation.feature_selector import select_features
+from sklearn.model_selection import train_test_split
 
 if 'data_exporter' not in globals():
     from mage_ai.data_preparation.decorators import data_exporter
@@ -28,15 +29,29 @@ def export(
     df, df_train, df_val = data
     target = kwargs.get('target', 'Label')
 
-    X, _, _ = vectorize_features(select_features(df))
-    y: Series = df[target]
+    #X, _, _ = vectorize_features(select_features(df))
+    #y: Series = df[target]
 
-    X_train, X_val, dv = vectorize_features(
-        select_features(df_train),
-        select_features(df_val),
+    # X_train, X_val, dv = vectorize_features(
+    #     select_features(df_train),
+    #     select_features(df_val),
+    # )
+    # y_train = df_train[target]
+    # y_val = df_val[target]
+
+    target = kwargs.get('target')
+    train_size = kwargs.get('train_size')
+
+    classes = df[target]
+    features = df.drop(columns=[target])
+
+    X_train, X_test, y_train, y_test = train_test_split(
+         features, classes, 
+         train_size=train_size, 
+         stratify=classes, 
+         random_state=42 
     )
-    y_train = df_train[target]
-    y_val = df_val[target]
+
 
     return X, X_train, X_val, y, y_train, y_val, dv
 
