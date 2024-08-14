@@ -24,6 +24,11 @@ def hyperparameter_tuning(
     Series,
 ]:
     X, X_train, X_val, y, y_train, y_val, _ = training_set['build']
+    #X_train, X_val, y_train, y_val = training_set['build']
+    if y_train.dtype == 'object' or isinstance(y_train.iloc[0], str):
+        y_train = LabelEncoder().fit_transform(y_train)
+        y_val = LabelEncoder().fit_transform(y_val)
+
 
     training = build_data(X_train, y_train)
     validation = build_data(X_val, y_val)

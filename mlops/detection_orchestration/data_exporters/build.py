@@ -29,30 +29,17 @@ def export(
     df, df_train, df_val = data
     target = kwargs.get('target', 'Label')
 
-    #X, _, _ = vectorize_features(select_features(df))
-    #y: Series = df[target]
+    X, _, _ = vectorize_features(df)
+    y: Series = df[target]
 
-    # X_train, X_val, dv = vectorize_features(
-    #     select_features(df_train),
-    #     select_features(df_val),
-    # )
-    # y_train = df_train[target]
-    # y_val = df_val[target]
-
-    target = kwargs.get('target')
-    train_size = kwargs.get('train_size')
-
-    classes = df[target]
-    features = df.drop(columns=[target])
-
-    X_train, X_test, y_train, y_test = train_test_split(
-         features, classes, 
-         train_size=train_size, 
-         stratify=classes, 
-         random_state=42 
+    X_train, X_val, dv = vectorize_features(
+        df_train,
+        df_val,
     )
+    y_train = df_train[target]
+    y_val = df_val[target]
 
-
+    #return X, X_train, X_val, y, y_train, y_val, dv
     return X, X_train, X_val, y, y_train, y_val, dv
 
 

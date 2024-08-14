@@ -5,7 +5,7 @@ import pandas as pd
 from mlops.utils.data_preparation.cleaning import clean
 from mlops.utils.data_preparation.feature_engineering import combine_features
 from mlops.utils.data_preparation.feature_selector import select_features
-from mlops.utils.data_preparation.splitters import split_on_value
+from mlops.utils.data_preparation.splitters import split_on_ratio
 
 
 
@@ -28,6 +28,17 @@ def transform(
     classes = df[target]
     features = df.drop(columns=[target])
 
+    
+    df_train, df_val = split_on_ratio(
+        df,
+        0.3
+    )
+
+    #   X_train, X_val, dv = vectorize_features(
+    #     select_features(df_train),
+    #     select_features(df_val),
+    # )
+
     # df_train, df_val = train_test_split(
     #     features, classes, 
     #     train_size=train_size, 
@@ -35,7 +46,7 @@ def transform(
     #     random_state=42 
     # )
 
-    df_train = df
-    df_val = df
+    # df_train = df
+    # df_val = df
 
     return df, df_train, df_val
