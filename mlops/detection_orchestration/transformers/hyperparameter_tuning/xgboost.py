@@ -7,6 +7,7 @@ from scipy.sparse._csr import csr_matrix
 
 from mlops.utils.logging import track_experiment
 from mlops.utils.models.xgboost import build_data, tune_hyperparameters
+from sklearn.preprocessing import LabelEncoder
 
 if 'transformer' not in globals():
     from mage_ai.data_preparation.decorators import transformer
