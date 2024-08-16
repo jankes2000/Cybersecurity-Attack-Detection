@@ -32,8 +32,28 @@ blocks:
   timeout: null
   type: custom
   upstream_blocks:
-  - remarkable_tree
+  - celestial_bard
   uuid: inference
+- all_upstream_blocks_executed: true
+  color: null
+  configuration:
+    file_source:
+      path: detection_orchestration/global_data_products/celestial_bard.py
+    global_data_product:
+      uuid: sklearn
+  downstream_blocks:
+  - inference
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: celestial bard
+  retry_config: null
+  status: not_executed
+  timeout: null
+  type: global_data_product
+  upstream_blocks: []
+  uuid: celestial_bard
 cache_block_output_in_memory: false
 callbacks: []
 concurrency_config: {}
@@ -45,7 +65,7 @@ executor_config: {}
 executor_count: 1
 executor_type: null
 extensions: {}
-name: predict_copy
+name: predict_sklearn
 notification_config: {}
 remote_variables_dir: null
 retry_config: {}
@@ -56,6 +76,6 @@ spark_config: {}
 tags:
 - inference
 type: python
-uuid: predict_copy
+uuid: predict_sklearn
 variables_dir: /home/src/mage_data/detection_orchestration
 widgets: []

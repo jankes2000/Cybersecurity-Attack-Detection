@@ -1,0 +1,14 @@
+triggers:
+- description: null
+  envs: []
+  last_enabled_at: 2024-08-16 11:03:56.665041+00:00
+  name: astonishing glacier
+  pipeline_uuid: predict_sklearn
+  schedule_interval: null
+  schedule_type: api
+  settings: null
+  sla: null
+  start_time: 2024-08-16 11:03:00+00:00
+  status: active
+  token: 49dba62ab8f640ba89519056711734f7
+  variables: {}
