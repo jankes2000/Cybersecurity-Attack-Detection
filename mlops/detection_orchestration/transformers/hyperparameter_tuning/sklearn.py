@@ -5,6 +5,7 @@ from scipy.sparse._csr import csr_matrix
 from sklearn.base import BaseEstimator
 
 from mlops.utils.models.sklearn import load_class, tune_hyperparameters
+from sklearn.preprocessing import LabelEncoder
 
 if 'transformer' not in globals():
     from mage_ai.data_preparation.decorators import transformer
@@ -23,6 +24,10 @@ def hyperparameter_tuning(
     Callable[..., BaseEstimator],
 ]:
     X, X_train, X_val, y, y_train, y_val, _ = training_set['build']
+
+    if y_train.dtype == 'object' or isinstance(y_train.iloc[0], str):
+        y_train = LabelEncoder().fit_transform(y_train)
+        y_val = LabelEncoder().fit_transform(y_val)
 
     model_class = load_class(model_class_name)
 

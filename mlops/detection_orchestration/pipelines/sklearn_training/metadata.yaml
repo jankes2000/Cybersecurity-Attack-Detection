@@ -54,7 +54,7 @@ blocks:
   type: custom
   upstream_blocks: []
   uuid: load_models
-- all_upstream_blocks_executed: true
+- all_upstream_blocks_executed: false
   color: null
   configuration:
     file_source:
@@ -67,7 +67,7 @@ blocks:
   language: python
   name: Hyperparameter tuning/sklearn
   retry_config: null
-  status: failed
+  status: updated
   timeout: null
   type: transformer
   upstream_blocks:
@@ -86,7 +86,7 @@ blocks:
   language: python
   name: sklearn
   retry_config: null
-  status: failed
+  status: updated
   timeout: null
   type: data_exporter
   upstream_blocks:

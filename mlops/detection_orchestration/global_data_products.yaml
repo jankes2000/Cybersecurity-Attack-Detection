@@ -1,3 +1,10 @@
+sklearn:
+  object_type: pipeline
+  object_uuid: sklearn_training
+  project: detection_orchestration
+  repo_path: /home/src/mlops/detection_orchestration
+  settings:
+    sklearn: {}
 training_set:
   object_type: pipeline
   object_uuid: data_preparation
