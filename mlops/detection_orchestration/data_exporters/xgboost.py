@@ -17,10 +17,11 @@ def train(
         Dict[str, Union[bool, float, int, str]],
         csr_matrix,
         Series,
+        labelEncoder
     ],
     **kwargs,
 ) -> Tuple[Booster, csr_matrix, Series]:
-    hyperparameters, X, y = settings
+    hyperparameters, X, y, labelEncoder = settings
 
     # Test training a model with low max depth
     # so that the output renders a reasonably sized plot tree.
@@ -35,4 +36,4 @@ def train(
 
     # DictVectorizer to transform features for online inference.
     vectorizer = training_set['build'][6]
-    return model, vectorizer
+    return model, vectorizer, labelEncoder

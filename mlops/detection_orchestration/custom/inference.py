@@ -46,7 +46,7 @@ DEFAULT_INPUTS = [
 
 @custom
 def predict(
-    model_settings: Dict[str, Tuple[Booster, DictVectorizer]],
+    model_settings: Dict[str, Tuple[Booster, DictVectorizer, LabelEncoder]],
     **kwargs,
 ) -> List[float]:
     inputs: List[Dict[str, Union[float, int, str]]] = kwargs.get('inputs', DEFAULT_INPUTS)
@@ -87,7 +87,14 @@ def predict(
             },
         ]
 
-    model, vectorizer = model_settings['xgboost']
+    model, vectorizer, label_encoder = model_settings['xgboost']
+
+    if 'Label' in inputs[0]:
+        label_values = [input_data['Label'] for input_data in inputs]
+        encoded_labels = label_encoder.transform(label_values)
+        for idx, input_data in enumerate(inputs):
+        input_data['Label'] = encoded_labels[idx]
+
     vectors = vectorizer.transform(inputs)
     predictions = model.predict(build_data(vectors))
 

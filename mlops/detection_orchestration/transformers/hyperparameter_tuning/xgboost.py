@@ -26,9 +26,10 @@ def hyperparameter_tuning(
 ]:
     X, X_train, X_val, y, y_train, y_val, _ = training_set['build']
     #X_train, X_val, y_train, y_val = training_set['build']
+    label_encoder = LabelEncoder()
     if y_train.dtype == 'object' or isinstance(y_train.iloc[0], str):
-        y_train = LabelEncoder().fit_transform(y_train)
-        y_val = LabelEncoder().fit_transform(y_val)
+        y_train = label_encoder.fit_transform(y_train)
+        y_val = label_encoder.transform(y_val)
 
     y_train = DataFrame(y_train, columns=['label'])
     y_val = DataFrame(y_val, columns=['label'])
@@ -44,4 +45,4 @@ def hyperparameter_tuning(
         **kwargs,
     )
 
-    return best_hyperparameters, X_train, y_train
+    return best_hyperparameters, X_train, y_train, transform
