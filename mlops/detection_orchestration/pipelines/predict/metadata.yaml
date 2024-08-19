@@ -14,7 +14,7 @@ blocks:
   language: python
   name: model
   retry_config: null
-  status: executed
+  status: failed
   timeout: null
   type: global_data_product
   upstream_blocks: []
@@ -36,7 +36,7 @@ blocks:
   type: markdown
   upstream_blocks: []
   uuid: online_inference_guide
-- all_upstream_blocks_executed: true
+- all_upstream_blocks_executed: false
   color: teal
   configuration:
     file_source:

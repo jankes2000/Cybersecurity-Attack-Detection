@@ -52,14 +52,14 @@ blocks:
   language: python
   name: XGBoost
   retry_config: null
-  status: updated
+  status: executed
   timeout: null
   type: data_exporter
   upstream_blocks:
   - training_set
   - hyperparameter_tuning/xgboost
   uuid: xgboost
-- all_upstream_blocks_executed: false
+- all_upstream_blocks_executed: true
   color: pink
   configuration:
     file_source:

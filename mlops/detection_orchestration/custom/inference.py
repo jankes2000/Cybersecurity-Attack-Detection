@@ -11,49 +11,89 @@ if 'custom' not in globals():
 
 DEFAULT_INPUTS = [
     {
-        # target = "duration": 11.5
-        'DOLocationID': 239,
-        'PULocationID': 236,
-        'trip_distance': 1.98,
+        'Protocol': 6,
+        'FIN Flag Cnt': 0,
+        'Init Bwd Win Byts': -1,
+        'SYN Flag Cnt': 0,
+        'Down/Up Ratio': 0,
+        'Src Port': 80,
+        'Dst Port': 443,
+        'ACK Flag Cnt': 1,
+        'Bwd Header Len': 64,
+        'Fwd Pkt Len Min': 0,
+        'Flow ID': '192.168.20.133-205.196.120.6-55200-443-6',
+        'Src IP': '205.196.120.6',
+        'Dst IP': '192.168.20.133',
+        'Timestamp': '5/2/2020 12:33'
     },
     {
-        # target = "duration" 20.8666666667
-        'DOLocationID': '170',
-        'PULocationID': '65',
-        'trip_distance': 6.54,
+        'Protocol': 6,
+        'FIN Flag Cnt': 1,
+        'Init Bwd Win Byts': 63,
+        'SYN Flag Cnt': 0,
+        'Down/Up Ratio': 0,
+        'Src Port': 80,
+        'Dst Port': 43678,
+        'ACK Flag Cnt': 1,
+        'Bwd Header Len': 64,
+        'Fwd Pkt Len Min': 0,
+        'Flow ID': '192.168.3.130-200.175.2.130-80-43678-6',
+        'Src IP': '192.168.3.130',
+        'Dst IP': '200.175.2.130',
+        'Timestamp': '9/1/2020 16:33'
     },
 ]
-
 
 @custom
 def predict(
     model_settings: Dict[str, Tuple[Booster, DictVectorizer]],
     **kwargs,
 ) -> List[float]:
-    inputs: List[Dict[str, Union[float, int]]] = kwargs.get('inputs', DEFAULT_INPUTS)
-    inputs = combine_features(inputs)
+    inputs: List[Dict[str, Union[float, int, str]]] = kwargs.get('inputs', DEFAULT_INPUTS)
+    #inputs = combine_features(inputs)
 
-    DOLocationID = kwargs.get('DOLocationID')
-    PULocationID = kwargs.get('PULocationID')
-    trip_distance = kwargs.get('trip_distance')
+    Protocol = kwargs.get('Protocol')
+    FIN_Flag_Cnt = kwargs.get('FIN Flag Cnt')
+    Init_Bwd_Win_Byts = kwargs.get('Init Bwd Win Byts')
+    SYN_Flag_Cnt = kwargs.get('SYN Flag Cnt')
+    Down_Up_Ratio = kwargs.get('Down/Up Ratio')
+    Src_Port = kwargs.get('Src Port')
+    Dst_Port = kwargs.get('Dst Port')
+    ACK_Flag_Cnt = kwargs.get('ACK Flag Cnt')
+    Bwd_Header_Len = kwargs.get('Bwd Header Len')
+    Fwd_Pkt_Len_Min = kwargs.get('Fwd Pkt Len Min')
+    Flow_ID = kwargs.get('Flow ID')
+    Src_IP = kwargs.get('Src IP')
+    Dst_IP = kwargs.get('Dst IP')
+    Timestamp = kwargs.get('Timestamp')
 
-    if DOLocationID is not None or PULocationID is not None or trip_distance is not None:
+    if any(v is not None for v in [Protocol, FIN_Flag_Cnt, Init_Bwd_Win_Byts, SYN_Flag_Cnt, Down_Up_Ratio, Src_Port, Dst_Port, ACK_Flag_Cnt, Bwd_Header_Len, Fwd_Pkt_Len_Min, Flow_ID, Src_IP, Dst_IP, Timestamp]):
         inputs = [
             {
-                'DOLocationID': DOLocationID,
-                'PULocationID': PULocationID,
-                'trip_distance': trip_distance,
+                'Protocol': Protocol,
+                'FIN Flag Cnt': FIN_Flag_Cnt,
+                'Init Bwd Win Byts': Init_Bwd_Win_Byts,
+                'SYN Flag Cnt': SYN_Flag_Cnt,
+                'Down/Up Ratio': Down_Up_Ratio,
+                'Src Port': Src_Port,
+                'Dst Port': Dst_Port,
+                'ACK Flag Cnt': ACK_Flag_Cnt,
+                'Bwd Header Len': Bwd_Header_Len,
+                'Fwd Pkt Len Min': Fwd_Pkt_Len_Min,
+                'Flow ID': Flow_ID,
+                'Src IP': Src_IP,
+                'Dst IP': Dst_IP,
+                'Timestamp': Timestamp,
             },
         ]
-    print(model_settings)
+
     model, vectorizer = model_settings['xgboost']
     vectors = vectorizer.transform(inputs)
-
     predictions = model.predict(build_data(vectors))
 
     for idx, input_feature in enumerate(inputs):
-        print(f'Prediction of duration using these features: {predictions[idx]}')
-        for key, value in inputs[idx].items():
+        print(f'Prediction using these features: {predictions[idx]}')
+        for key, value in input_feature.items():
             print(f'\t{key}: {value}')
 
     return predictions.tolist()

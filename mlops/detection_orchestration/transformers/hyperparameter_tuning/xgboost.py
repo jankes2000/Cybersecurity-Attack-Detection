@@ -2,7 +2,7 @@ from typing import Dict, Tuple, Union
 
 import numpy as np
 import xgboost as xgb
-from pandas import Series
+from pandas import Series, DataFrame
 from scipy.sparse._csr import csr_matrix
 
 from mlops.utils.logging import track_experiment
@@ -29,6 +29,9 @@ def hyperparameter_tuning(
     if y_train.dtype == 'object' or isinstance(y_train.iloc[0], str):
         y_train = LabelEncoder().fit_transform(y_train)
         y_val = LabelEncoder().fit_transform(y_val)
+
+    y_train = DataFrame(y_train, columns=['label'])
+    y_val = DataFrame(y_val, columns=['label'])
 
 
     training = build_data(X_train, y_train)
