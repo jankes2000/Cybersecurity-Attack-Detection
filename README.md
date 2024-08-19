@@ -9,9 +9,9 @@ Dataset
 Dataset: inSDN Dataset on Kaggle
 The dataset includes network traffic data used for training and evaluating the machine learning models.
 Technologies and Tools
-Cloud: Saturn Cloud
+Cloud: AWS
 
-Saturn Cloud is used to provide scalable computing resources for model training and experimentation.
+Azure is used to provide scalable computing resources for model training and experimentation.
 Experiment Tracking: MLFlow
 
 MLFlow is used to track experiments, log metrics, and manage model versions.
@@ -39,15 +39,30 @@ Adminer: http://localhost:8080
 Grafana: http://localhost:3000
 
 Deploying the Project with Terraform
-If you prefer to deploy the project using Terraform in Saturn Cloud for instance, follow these steps:
+If you prefer to deploy the project using Terraform in AWS for instance, follow these steps.
 
-Set Up Terraform Configuration: Ensure that your Terraform configuration files are properly set up to provision the required cloud resources.
+The deployment process for Docker Compose using Mage on AWS, as outlined in the deploying_to_production pipeline within Mage AI, involves several key steps:
 
-Initialize Terraform:
+Setting Up AWS Permissions:
+
+Create IAM policies for deploying and destroying resources on AWS using Terraform.
+Create an IAM user (MageDeployer) and attach the policies TerraformApplyDeployMage and TerraformDestroyDeleteResources to manage the deployment process. Generate access keys for this user to be used in the command-line interface (CLI).
+Configuring Terraform:
+
+Install and set up Terraform on your local machine.
+Customize the Terraform configurations by updating the variables.tf and env_vars.json files with the appropriate Docker image, application name, AWS region, and availability zones.
+Deploying to AWS:
+
+Navigate to the Terraform directory and run the terraform init and terraform apply commands to deploy the application to AWS.
+Version Control and CI/CD:
+
+Set up continuous integration and continuous deployment (CI/CD) using GitHub Actions.
+If the Terraform templates from Mage are used, a GitHub Action YAML file will be generated automatically, containing the necessary configurations for building and deploying the application to AWS Elastic Container Service (ECS).
+Create an IAM user (MageContinuousIntegrationDeployer) with the necessary policies for managing the CI/CD process. Add the generated access keys as secrets in your GitHub repository.
+This process is thoroughly detailed and implemented within the deploying_to_production pipeline in Mage AI, guiding users through each step required for successful deployment.
 
 
-    terraform init
-Apply Terraform Configuration:
-    apply
 
-Deploy the Project: Follow your cloud provider's specific instructions for deploying and managing services.
+
+
+

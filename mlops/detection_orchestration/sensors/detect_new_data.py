@@ -1,37 +1,35 @@
 import json
 import os
-import requests
+import glob
 
 from mage_ai.settings.repo import get_repo_path
 
 if 'sensor' not in globals():
     from mage_ai.data_preparation.decorators import sensor
 
-
 @sensor
 def check_for_new_data(*args, **kwargs) -> bool:
+    retraining_folder = '/home/src/Data/retraining'
     path = os.path.join(get_repo_path(), '.cache', 'data_tracker')
     os.makedirs(os.path.dirname(path), exist_ok=True)
     
-    data_tracker_prev = {}
+    data_tracker_prev = set()
     if os.path.exists(path):
         with open(path, 'r') as f:
-            data_tracker_prev = json.load(f)
+            data_tracker_prev = set(json.load(f))
 
-    data_tracker = requests.get('https://hub.docker.com/v2/repositories/mageai/mageai').json()
-    with open(path, 'w') as f:
-        f.write(json.dumps(data_tracker))
-
-    count_prev = data_tracker_prev.get('pull_count')
-    count = data_tracker.get('pull_count')
+    current_files = set(glob.glob(os.path.join(retraining_folder, '*.csv')))
     
-    print(f'Previous count: {count_prev}')
-    print(f'Current count:  {count}')
+    with open(path, 'w') as f:
+        f.write(json.dumps(list(current_files)))
 
-    should_train = count_prev is None or count > count_prev
-    if should_train:
-        print('Retraining models...')
+    new_files = current_files - data_tracker_prev
+    
+    if new_files:
+        print(f'New files found: {new_files}')
+        should_train = True
     else:
-        print('Not enough new data to retrain models.')
+        print('No new files found.')
+        should_train = False
     
     return should_train
