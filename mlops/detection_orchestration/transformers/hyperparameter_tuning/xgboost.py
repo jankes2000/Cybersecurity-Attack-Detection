@@ -45,4 +45,4 @@ def hyperparameter_tuning(
         **kwargs,
     )
 
-    return best_hyperparameters, X_train, y_train, transform
+    return best_hyperparameters, X_train, y_train, label_encoder

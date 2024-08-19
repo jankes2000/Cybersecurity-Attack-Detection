@@ -3,6 +3,7 @@ from typing import Dict, Tuple, Union
 from pandas import Series
 from scipy.sparse._csr import csr_matrix
 from xgboost import Booster
+from sklearn.preprocessing import LabelEncoder
 
 from mlops.utils.models.xgboost import build_data, fit_model
 
@@ -17,7 +18,7 @@ def train(
         Dict[str, Union[bool, float, int, str]],
         csr_matrix,
         Series,
-        labelEncoder
+        LabelEncoder
     ],
     **kwargs,
 ) -> Tuple[Booster, csr_matrix, Series]:

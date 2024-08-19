@@ -89,18 +89,24 @@ def predict(
 
     model, vectorizer, label_encoder = model_settings['xgboost']
 
-    if 'Label' in inputs[0]:
-        label_values = [input_data['Label'] for input_data in inputs]
-        encoded_labels = label_encoder.transform(label_values)
-        for idx, input_data in enumerate(inputs):
-        input_data['Label'] = encoded_labels[idx]
+    # if 'Label' in inputs[0]:
+    #     label_values = [input_data['Label'] for input_data in inputs]
+    #     encoded_labels = label_encoder.transform(label_values)
+    #     for idx, input_data in enumerate(inputs):
+    #     input_data['Label'] = encoded_labels[idx]
 
     vectors = vectorizer.transform(inputs)
     predictions = model.predict(build_data(vectors))
 
+    # for idx, input_feature in enumerate(inputs):
+    #     print(f'Prediction using these features: {predictions[idx]}')
+    #     for key, value in input_feature.items():
+    #         print(f'\t{key}: {value}')
+    decoded_predictions = label_encoder.inverse_transform(predictions)
+
     for idx, input_feature in enumerate(inputs):
-        print(f'Prediction using these features: {predictions[idx]}')
+        print(f'Prediction using these features: {decoded_predictions[idx]}')
         for key, value in input_feature.items():
             print(f'\t{key}: {value}')
 
-    return predictions.tolist()
+    return decoded_predictions.tolist()
