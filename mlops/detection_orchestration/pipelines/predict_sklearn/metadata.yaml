@@ -16,7 +16,7 @@ blocks:
   type: markdown
   upstream_blocks: []
   uuid: online_inference_guide
-- all_upstream_blocks_executed: false
+- all_upstream_blocks_executed: true
   color: teal
   configuration:
     file_source:
@@ -28,7 +28,7 @@ blocks:
   language: python
   name: Inference
   retry_config: null
-  status: updated
+  status: failed
   timeout: null
   type: custom
   upstream_blocks:
@@ -49,7 +49,7 @@ blocks:
   language: python
   name: celestial bard
   retry_config: null
-  status: not_executed
+  status: executed
   timeout: null
   type: global_data_product
   upstream_blocks: []

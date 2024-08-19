@@ -33,19 +33,19 @@ def predict(
     inputs: List[Dict[str, Union[float, int]]] = kwargs.get('inputs', DEFAULT_INPUTS)
     inputs = combine_features(inputs)
 
-    # DOLocationID = kwargs.get('DOLocationID')
-    # PULocationID = kwargs.get('PULocationID')
-    # trip_distance = kwargs.get('trip_distance')
+    DOLocationID = kwargs.get('DOLocationID')
+    PULocationID = kwargs.get('PULocationID')
+    trip_distance = kwargs.get('trip_distance')
 
-    # if DOLocationID is not None or PULocationID is not None or trip_distance is not None:
-    #     inputs = [
-    #         {
-    #             'DOLocationID': DOLocationID,
-    #             'PULocationID': PULocationID,
-    #             'trip_distance': trip_distance,
-    #         },
-    #     ]
-    
+    if DOLocationID is not None or PULocationID is not None or trip_distance is not None:
+        inputs = [
+            {
+                'DOLocationID': DOLocationID,
+                'PULocationID': PULocationID,
+                'trip_distance': trip_distance,
+            },
+        ]
+    print(model_settings)
     model, vectorizer = model_settings['sklearn']
     vectors = vectorizer.transform(inputs)
 

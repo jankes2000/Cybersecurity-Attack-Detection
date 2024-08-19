@@ -40,6 +40,12 @@ def export(
     y_val = df_val[target]
 
     #return X, X_train, X_val, y, y_train, y_val, dv
+
+    X_train = X_train[:, :10]
+    X = X[:, :10]
+    X_val = X_val[:, :10]
+
+
     return X, X_train, X_val, y, y_train, y_val, dv
 
 

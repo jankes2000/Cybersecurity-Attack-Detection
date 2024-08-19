@@ -1,6 +1,8 @@
 from typing import Tuple
 
 import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.feature_selection import SelectFromModel
 
 from mlops.utils.data_preparation.cleaning import clean
 from mlops.utils.data_preparation.feature_engineering import combine_features
@@ -34,6 +36,7 @@ def transform(
         0.3
     )
 
+
     #   X_train, X_val, dv = vectorize_features(
     #     select_features(df_train),
     #     select_features(df_val),
@@ -48,5 +51,8 @@ def transform(
 
     # df_train = df
     # df_val = df
+
+
+
 
     return df, df_train, df_val

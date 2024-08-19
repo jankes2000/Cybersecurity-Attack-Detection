@@ -3,7 +3,7 @@ blocks:
   color: null
   configuration:
     file_source:
-      path: unit_3_observability/global_data_products/model.py
+      path: null
     global_data_product:
       uuid: xgboost
   downstream_blocks:
@@ -14,7 +14,7 @@ blocks:
   language: python
   name: model
   retry_config: null
-  status: failed
+  status: executed
   timeout: null
   type: global_data_product
   upstream_blocks: []
@@ -23,7 +23,7 @@ blocks:
   color: null
   configuration:
     file_source:
-      path: unit_3_observability/markdowns/online_inference_guide.md
+      path: null
   downstream_blocks: []
   executor_config: null
   executor_type: local_python
@@ -40,7 +40,7 @@ blocks:
   color: teal
   configuration:
     file_source:
-      path: unit_3_observability/custom/inference.py
+      path: null
   downstream_blocks: []
   executor_config: null
   executor_type: local_python
@@ -77,5 +77,5 @@ tags:
 - inference
 type: python
 uuid: predict
-variables_dir: /home/src/mage_data/unit_3_observability
+variables_dir: /home/src/mage_data/detection_orchestration
 widgets: []

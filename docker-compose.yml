@@ -8,9 +8,11 @@ services:
     deploy:
       resources:
         limits:
-          memory: 40G         # Maksymalny limit pamięci RAM
+          memory: 45G  
+          cpus: '20.0'  
     ports:
       - 6789:6789
+      - 6000:6000
     volumes:
       # Mount your local codebase to the container.
       - .:/$MAGE_CODE_PATH
@@ -46,52 +48,52 @@ services:
     networks:
       - app-network
 
-  mlflow:
-    image: ghcr.io/mlflow/mlflow:v2.15.1
-    container_name: mlflow
-    ports:
-      - "5000:5000"
-    volumes:
-       - ./mlruns:/mlflow/mlruns
-    environment:
-       MLFLOW_BACKEND_STORE_URI: sqlite:///mlflow.db
-       MLFLOW_ARTIFACT_ROOT: /mlflow/mlruns
-    command: mlflow server --backend-store-uri ${MLFLOW_BACKEND_STORE_URI} --default-artifact-root ${MLFLOW_ARTIFACT_ROOT} --host 0.0.0.0 --port 5000
-    networks:
-      - app-network
+  # mlflow:
+  #   image: ghcr.io/mlflow/mlflow:v2.15.1
+  #   container_name: mlflow
+  #   ports:
+  #     - "5000:5000"
+  #   volumes:
+  #      - ./mlruns:/mlflow/mlruns
+  #   environment:
+  #      MLFLOW_BACKEND_STORE_URI: sqlite:///mlflow.db
+  #      MLFLOW_ARTIFACT_ROOT: /mlflow/mlruns
+  #   command: mlflow server --backend-store-uri ${MLFLOW_BACKEND_STORE_URI} --default-artifact-root ${MLFLOW_ARTIFACT_ROOT} --host 0.0.0.0 --port 5000
+  #   networks:
+  #     - app-network
 
-  db:
-    image: postgres
-    restart: always
-    environment:
-      POSTGRES_PASSWORD: example
-    ports:
-      - "5433:5432"
-    networks:
-      - back-tier
+  # db:
+  #   image: postgres
+  #   restart: always
+  #   environment:
+  #     POSTGRES_PASSWORD: example
+  #   ports:
+  #     - "5433:5432"
+  #   networks:
+  #     - back-tier
 
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - "8080:8080"
-    networks:
-      - back-tier
-      - front-tier  
+  # adminer:
+  #   image: adminer
+  #   restart: always
+  #   ports:
+  #     - "8080:8080"
+  #   networks:
+  #     - back-tier
+  #     - front-tier  
 
-  grafana:
-    image: grafana/grafana-enterprise
-    user: "472"
-    ports:
-      - "3000:3000"
-    volumes:
-      - ./config/grafana_datasources.yaml:/etc/grafana/provisioning/datasources/datasource.yaml:ro
-      - ./config/grafana_dashboards.yaml:/etc/grafana/provisioning/dashboards/dashboards.yaml:ro
-      - ./dashboards:/opt/grafana/dashboards
-    networks:
-      - back-tier
-      - front-tier
-    restart: always
+  # grafana:
+  #   image: grafana/grafana-enterprise
+  #   user: "472"
+  #   ports:
+  #     - "3000:3000"
+  #   volumes:
+  #     - ./config/grafana_datasources.yaml:/etc/grafana/provisioning/datasources/datasource.yaml:ro
+  #     - ./config/grafana_dashboards.yaml:/etc/grafana/provisioning/dashboards/dashboards.yaml:ro
+  #     - ./dashboards:/opt/grafana/dashboards
+  #   networks:
+  #     - back-tier
+  #     - front-tier
+  #   restart: always
 
 networks:
   app-network:
