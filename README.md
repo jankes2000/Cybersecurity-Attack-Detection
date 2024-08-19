@@ -28,9 +28,10 @@ Infrastructure as Code (IaC): Terraform
 
 Terraform is used to define and provision the cloud infrastructure in a scalable and repeatable manner.
 
-# Getting Started+
+# Getting Started
 
-Start locally with docker compose by running ./scripts/start.sh
+Start locally with docker compose by running 
+    ./scripts/start.sh
 Access Services:
 Mage Platform: http://localhost:6789
 MLFlow: http://localhost:5000
@@ -47,9 +48,6 @@ Initialize Terraform:
 
     terraform init
 Apply Terraform Configuration:
-
-
-bash
     apply
 
 Deploy the Project: Follow your cloud provider's specific instructions for deploying and managing services.
