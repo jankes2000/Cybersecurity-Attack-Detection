@@ -15,8 +15,8 @@ from mlflow.xgboost import log_model as log_model_xgboost
 from sklearn.base import BaseEstimator
 
 DEFAULT_DEVELOPER = os.getenv('EXPERIMENTS_DEVELOPER', 'mager')
-DEFAULT_EXPERIMENT_NAME = 'nyc-taxi-experiment'
-DEFAULT_TRACKING_URI = 'sqlite:///mlflow.db'
+DEFAULT_EXPERIMENT_NAME = 'cybersecurity-detection-experiment'
+DEFAULT_TRACKING_URI = 'http://mlflow:5000'
 
 
 def setup_experiment(
@@ -43,7 +43,7 @@ def track_experiment(
     developer: Optional[str] = None,
     hyperparameters: Dict[str, Union[float, int, str]] = {},
     metrics: Dict[str, float] = {},
-    model: Optional[Union[BaseEstimator, xgb.Booster]] = None,
+    model: Optional[Union[BaseEstimator, xgb.Booster]] = xgb.Booster,
     partition: Optional[str] = None,
     pipeline_uuid: Optional[str] = None,
     predictions: Optional[np.ndarray] = None,
@@ -144,7 +144,7 @@ def track_experiment(
             client.log_inputs(run_id, dataset_inputs)
 
     if model:
-        log_model = None
+        log_model = True
 
         if isinstance(model, BaseEstimator):
             log_model = log_model_sklearn
@@ -160,5 +160,27 @@ def track_experiment(
             log_model(model, **opts)
             if verbosity:
                 print(f'Logged model {model.__class__.__name__}.')
+               
+            model_uri = f"runs:/{run_id}/models"
+            model_name = model.__class__.__name__
+
+            try:
+                client.create_registered_model(model_name)
+                if verbosity:
+                    print(f'Created new registered model: {model_name}.')
+            except mlflow.exceptions.RestException as e:
+                if 'RESOURCE_ALREADY_EXISTS' in str(e):
+                    if verbosity:
+                        print(f'Registered model {model_name} already exists.')
+                else:
+                    raise e
+
+            client.create_model_version(
+                name=model_name,
+                source=model_uri,
+                run_id=run_id,
+            )
+            if verbosity:
+                print(f'Registered model version for {model_name}.')
 
     return run

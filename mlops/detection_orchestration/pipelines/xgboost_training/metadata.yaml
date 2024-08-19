@@ -33,7 +33,7 @@ blocks:
   language: python
   name: Hyperparameter tuning/XGBoost
   retry_config: null
-  status: executed
+  status: updated
   timeout: null
   type: transformer
   upstream_blocks:
@@ -59,7 +59,7 @@ blocks:
   - training_set
   - hyperparameter_tuning/xgboost
   uuid: xgboost
-- all_upstream_blocks_executed: false
+- all_upstream_blocks_executed: true
   color: pink
   configuration:
     file_source:
@@ -71,7 +71,7 @@ blocks:
   language: python
   name: Dashboard data source
   retry_config: null
-  status: executed
+  status: updated
   timeout: null
   type: custom
   upstream_blocks:

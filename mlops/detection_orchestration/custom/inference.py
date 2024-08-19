@@ -1,10 +1,15 @@
 from typing import Dict, List, Tuple, Union
+import mlflow.xgboost
 
 from sklearn.feature_extraction import DictVectorizer
 from xgboost import Booster
+from sklearn.preprocessing import LabelEncoder
 
 from mlops.utils.data_preparation.feature_engineering import combine_features
 from mlops.utils.models.xgboost import build_data
+
+import mlflow
+from mlflow import MlflowClient
 
 if 'custom' not in globals():
     from mage_ai.data_preparation.decorators import custom
@@ -43,6 +48,44 @@ DEFAULT_INPUTS = [
         'Timestamp': '9/1/2020 16:33'
     },
 ]
+
+DEFAULT_MODEL_NAME = "Booster"
+
+def get_best_model_version(model_name: str = DEFAULT_MODEL_NAME) -> Tuple[str, float]:
+    mlflow.set_tracking_uri('http://mlflow:5000')
+
+    client = MlflowClient()
+    # Get all versions of the model
+    model_versions = client.search_model_versions(f"name='{model_name}'")
+    
+
+    models = client.search_registered_models()
+    for model in models:
+        print(f"Model Name: {model.name}, Description: {model.description}")
+    
+    best_version = None
+    best_rmse = float('inf')  # Assuming lower RMSE is better
+
+    for version in model_versions:
+        # Get the run ID associated with the model version
+        run_id = version.run_id
+        
+        # Fetch metrics from the run
+        metrics = client.get_run(run_id).data.metrics
+        rmse = metrics.get('rmse', float('inf'))  # Change 'rmse' if needed
+        
+        if rmse < best_rmse:
+            best_rmse = rmse
+            best_version = version.version
+    
+    return best_version, best_rmse
+
+
+def load_best_model(model_name: str, version: str) -> mlflow.pyfunc.PythonModel:
+    #model_uri = f"models/{model_name}/versions/{version}"
+    model_uri = "mlflow-artifacts:/0/2a76b0b39ce14da195c34f24ae8b667d/artifacts/models"
+    model = mlflow.xgboost.load_model(model_uri)
+    return model
 
 @custom
 def predict(
@@ -89,20 +132,17 @@ def predict(
 
     model, vectorizer, label_encoder = model_settings['xgboost']
 
-    # if 'Label' in inputs[0]:
-    #     label_values = [input_data['Label'] for input_data in inputs]
-    #     encoded_labels = label_encoder.transform(label_values)
-    #     for idx, input_data in enumerate(inputs):
-    #     input_data['Label'] = encoded_labels[idx]
+    best_version, best_rmse = get_best_model_version()
+
+    model_mlflow = load_best_model(DEFAULT_MODEL_NAME, best_version)
 
     vectors = vectorizer.transform(inputs)
+
+
     predictions = model.predict(build_data(vectors))
 
-    # for idx, input_feature in enumerate(inputs):
-    #     print(f'Prediction using these features: {predictions[idx]}')
-    #     for key, value in input_feature.items():
-    #         print(f'\t{key}: {value}')
-    decoded_predictions = label_encoder.inverse_transform(predictions)
+  
+    decoded_predictions = label_encoder.inverse_transform(predictions.round().astype(int))
 
     for idx, input_feature in enumerate(inputs):
         print(f'Prediction using these features: {decoded_predictions[idx]}')

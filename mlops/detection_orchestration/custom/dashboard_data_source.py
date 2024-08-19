@@ -19,7 +19,8 @@ def source(
     ],
     **kwargs,
 ) -> Tuple[Booster, csr_matrix, csr_matrix]:
-    model, _ = training_results
-    _, X_train, y_train = settings
+    model, _, _ = training_results
+   
+    _, X_train, y_train, _ = settings
 
     return model, X_train, y_train

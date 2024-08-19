@@ -26,9 +26,13 @@ def hyperparameter_tuning(
 ]:
     X, X_train, X_val, y, y_train, y_val, _ = training_set['build']
     #X_train, X_val, y_train, y_val = training_set['build']
+    all_labels = ['U2R', 'BFA', 'DDoS', 'DoS', 'Probe', 'Normal']
+
     label_encoder = LabelEncoder()
+    label_encoder.fit(all_labels)
+
     if y_train.dtype == 'object' or isinstance(y_train.iloc[0], str):
-        y_train = label_encoder.fit_transform(y_train)
+        y_train = label_encoder.transform(y_train)
         y_val = label_encoder.transform(y_val)
 
     y_train = DataFrame(y_train, columns=['label'])

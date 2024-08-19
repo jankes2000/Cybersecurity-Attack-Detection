@@ -2,7 +2,7 @@ import pandas as pd
 from sklearn.ensemble import ExtraTreesClassifier
 from sklearn.model_selection import train_test_split
 
-data = pd.read_csv("/mnt/c/Workspace/Cybersecurity-Attack-Detection/Data/train_set.csv")
+data = pd.read_csv("../Data/train_set.csv")
 categorical_cols = ["Flow ID", "Src IP", "Src Port", "Dst IP", "Dst Port", "Protocol", "Timestamp"]
 X = data.drop(columns=["Label"])
 y = data["Label"]
@@ -16,7 +16,7 @@ important_features = pd.Series(model.feature_importances_, index=X_train.select_
 selected_cols = list(important_features) + categorical_cols
 X_selected = X[selected_cols]
 X_selected["Label"] = y
-X_selected.to_csv("/mnt/c/Workspace/Cybersecurity-Attack-Detection/Data/train_set_selected.csv", index=False)
+X_selected.to_csv("../Data/train_set_selected.csv", index=False)
 
 
 # import pandas as pd
