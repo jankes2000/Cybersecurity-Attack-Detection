@@ -1,5 +1,4 @@
 from typing import Dict, Tuple, Union
-import numpy as np
 
 from pandas import Series
 from scipy.sparse._csr import csr_matrix
@@ -23,9 +22,6 @@ def train(
 ) -> Tuple[Booster, csr_matrix, Series]:
     hyperparameters, X, y = settings
 
-    print(y)
-    # if isinstance(y, dict):
-    #     y = np.array(list(y.values()))
     # Test training a model with low max depth
     # so that the output renders a reasonably sized plot tree.
     if kwargs.get('max_depth'):

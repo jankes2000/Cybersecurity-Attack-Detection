@@ -46,7 +46,7 @@ def predict(
             },
         ]
     print(model_settings)
-    model, vectorizer = model_settings['sklearn']
+    model, vectorizer = model_settings['xgboost']
     vectors = vectorizer.transform(inputs)
 
     predictions = model.predict(build_data(vectors))
