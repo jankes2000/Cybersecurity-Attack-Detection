@@ -39,74 +39,68 @@ def export(
     y_train = df_train[target]
     y_val = df_val[target]
 
-    #return X, X_train, X_val, y, y_train, y_val, dv
-
-    # X_train = X_train[:, :10]
-    # X = X[:, :10]
-    # X_val = X_val[:, :10]
-
 
     return X, X_train, X_val, y, y_train, y_val, dv
 
 
-# @test
-# def test_dataset(
-#     X: csr_matrix,
-#     X_train: csr_matrix,
-#     X_val: csr_matrix,
-#     y: Series,
-#     y_train: Series,
-#     y_val: Series,
-#     *args,
-# ) -> None:
-#     assert (
-#         X.shape[0] == 105870
-#     ), f'Entire dataset should have 105870 examples, but has {X.shape[0]}'
-#     assert (
-#         X.shape[1] == 7027
-#     ), f'Entire dataset should have 7027 features, but has {X.shape[1]}'
-#     assert (
-#         len(y.index) == X.shape[0]
-#     ), f'Entire dataset should have {X.shape[0]} examples, but has {len(y.index)}'
+@test
+def test_dataset(
+    X: csr_matrix,
+    X_train: csr_matrix,
+    X_val: csr_matrix,
+    y: Series,
+    y_train: Series,
+    y_val: Series,
+    *args,
+) -> None:
+    assert (
+        X.shape[0] == 6155
+    ), f'Entire dataset should have 105870 examples, but has {X.shape[0]}'
+    assert (
+        X.shape[1] == 7027
+    ), f'Entire dataset should have 7027 features, but has {X.shape[1]}'
+    assert (
+        len(y.index) == X.shape[0]
+    ), f'Entire dataset should have {X.shape[0]} examples, but has {len(y.index)}'
 
 
-# @test
-# def test_training_set(
-#     X: csr_matrix,
-#     X_train: csr_matrix,
-#     X_val: csr_matrix,
-#     y: Series,
-#     y_train: Series,
-#     y_val: Series,
-#     *args,
-# ) -> None:
-#     assert (
-#         X_train.shape[0] == 54378
-#     ), f'Training set for training model should have 54378 examples, but has {X_train.shape[0]}'
-#     assert (
-#         X_train.shape[1] == 5094
-#     ), f'Training set for training model should have 5094 features, but has {X_train.shape[1]}'
-#     assert (
-#         len(y_train.index) == X_train.shape[0]
-#     ), f'Training set for training model should have {X_train.shape[0]} examples, but has {len(y_train.index)}'
+@test
+def test_training_set(
+    X: csr_matrix,
+    X_train: csr_matrix,
+    X_val: csr_matrix,
+    y: Series,
+    y_train: Series,
+    y_val: Series,
+    *args,
+) -> None:
+    assert (
+        X_train.shape[0] == 1846
+    ), f'Training set for training model should have 54378 examples, but has {X_train.shape[0]}'
+    assert (
+        X_train.shape[1] == 2944
+    ), f'Training set for training model should have 5094 features, but has {X_train.shape[1]}'
+    assert (
+        len(y_train.index) == X_train.shape[0]
+    ), f'Training set for training model should have {X_train.shape[0]} examples, but has {len(y_train.index)}'
 
 
-# @test
-# def test_validation_set(
-#     X: csr_matrix,
-#     X_train: csr_matrix,
-#     X_val: csr_matrix,
-#     y: Series,
-#     y_train: Series,
-#     y_val: Series,
-#     *args,
-# ) -> None:
-#     assert (
-#         X_val.shape[0] == 51492
-#     ), f'Training set for validation should have 51492 examples, but has {X_val.shape[0]}'
-#     assert (
-#         X_val.shape[1] == 5094
-#     ), f'Training set for validation should have 5094 features, but has {X_val.shape[1]}'
-#     assert (
-#         len(y_val.index) == X_val.shape[0]
-#     ), f'Training set for training model should have {X_val.shape[0]} examples, but has {len(y_val.index)}'
+@test
+def test_validation_set(
+    X: csr_matrix,
+    X_train: csr_matrix,
+    X_val: csr_matrix,
+    y: Series,
+    y_train: Series,
+    y_val: Series,
+    *args,
+) -> None:
+    assert (
+        X_val.shape[0] == 4309
+    ), f'Training set for validation should have 51492 examples, but has {X_val.shape[0]}'
+    assert (
+        X_val.shape[1] == 2944
+    ), f'Training set for validation should have 5094 features, but has {X_val.shape[1]}'
+    assert (
+        len(y_val.index) == X_val.shape[0]
+    ), f'Training set for training model should have {X_val.shape[0]} examples, but has {len(y_val.index)}'

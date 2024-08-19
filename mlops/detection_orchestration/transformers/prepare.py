@@ -24,9 +24,7 @@ def transform(
     target = kwargs.get('target')
     train_size = kwargs.get('train_size')
 
-    #df = clean(df)
-    #df = combine_features(df)
-    #print(target)
+
     classes = df[target]
     features = df.drop(columns=[target])
 
@@ -35,24 +33,6 @@ def transform(
         df,
         0.3
     )
-
-
-    #   X_train, X_val, dv = vectorize_features(
-    #     select_features(df_train),
-    #     select_features(df_val),
-    # )
-
-    # df_train, df_val = train_test_split(
-    #     features, classes, 
-    #     train_size=train_size, 
-    #     stratify=classes, 
-    #     random_state=42 
-    # )
-
-    # df_train = df
-    # df_val = df
-
-
 
 
     return df, df_train, df_val
