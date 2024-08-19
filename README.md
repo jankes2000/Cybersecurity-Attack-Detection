@@ -1,5 +1,6 @@
 # Project
 Welcome to the Cybersecurity Attack Detection project for MLOps Zoomcamp! This repository contains an end-to-end machine learning MLOps solution designed to detect cybersecurity attacks. This project leverages the InSDN dataset https://www.kaggle.com/datasets/badcodebuilder/insdn-dataset and employs a range of technologies to ensure robust, scalable, and efficient cybersecurity solutions. Below is a comprehensive guide to understanding and using this project.
+
 # Problem Description
 In the realm of cybersecurity, detecting and responding to attacks in real time is crucial. This project addresses the challenge of identifying potential security breaches by analyzing network traffic data. The primary goal is to build a machine learning model that can accurately classify network events as either benign or indicative of an attack. The project utilizes the inSDN dataset from Kaggle, which provides a rich set of data for training and testing the model.
 
@@ -19,7 +20,7 @@ The project addresses these problems through a comprehensive machine learning-ba
 
 The project solves the problem of cyberattack detection by leveraging advanced machine learning techniques and automated processes. It effectively handles the complexities of large-scale data, adapts to evolving threats, and provides timely detection of potential cyberattacks. By integrating data preparation, model training, real-time prediction, and automatic retraining, the solution offers a comprehensive and adaptive approach to securing IT systems against sophisticated cyber threa
 
-# Architecture
+# Implementation Architecture
 The architecture of this project is designed to be modular and scalable. Here's an overview of the key components and technologies used:
 
 Dataset
@@ -37,7 +38,7 @@ Workflow Orchestration: Mage
 Mage is utilized for orchestrating and managing data workflows and pipeline execution.
 Monitoring: Evidently
 
-Evidently is employed to monitor the model’s performance and generate insights.
+Evidently and MLFlow is employed to monitor the model’s performance and generate insights.
 CI/CD: GitHub Actions
 
 GitHub Actions is used for continuous integration and deployment, automating the testing and deployment process.
@@ -93,19 +94,19 @@ If you prefer to deploy the project using Terraform in AWS for instance, follow 
 
 The deployment process for Docker Compose using Mage on AWS, as outlined in the deploying_to_production pipeline within Mage AI, involves several key steps:
 
-Setting Up AWS Permissions:
-
+* Setting Up AWS Permissions:
 Create IAM policies for deploying and destroying resources on AWS using Terraform.
 Create an IAM user (MageDeployer) and attach the policies TerraformApplyDeployMage and TerraformDestroyDeleteResources to manage the deployment process. Generate access keys for this user to be used in the command-line interface (CLI).
-Configuring Terraform:
 
+* Configuring Terraform:
 Install and set up Terraform on your local machine.
 Customize the Terraform configurations by updating the variables.tf and env_vars.json files with the appropriate Docker image, application name, AWS region, and availability zones.
-Deploying to AWS:
+
+* Deploying to AWS:
 
 Navigate to the Terraform directory and run the terraform init and terraform apply commands to deploy the application to AWS.
-Version Control and CI/CD:
 
+* Version Control and CI/CD:
 Set up continuous integration and continuous deployment (CI/CD) using GitHub Actions.
 If the Terraform templates from Mage are used, a GitHub Action YAML file will be generated automatically, containing the necessary configurations for building and deploying the application to AWS Elastic Container Service (ECS).
 Create an IAM user (MageContinuousIntegrationDeployer) with the necessary policies for managing the CI/CD process. Add the generated access keys as secrets in your GitHub repository.
