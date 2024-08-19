@@ -28,6 +28,36 @@ Infrastructure as Code (IaC): Terraform
 
 Terraform is used to define and provision the cloud infrastructure in a scalable and repeatable manner.
 
+
+The cyberattack detection solution in IT systems, as described by the pipelines in Mage AI, operates through a structured workflow involving data preparation, model training, real-time prediction, and continuous improvement. Here’s a breakdown of how each pipeline contributes to the overall detection system:
+
+1. Data Preparation
+Objective: Collect and preprocess data to create useful features for training.
+Process: This pipeline gathers data from various sources related to IT systems and cyber activity. It may also generate additional training data if necessary. Feature engineering is performed to transform raw data into a structured format suitable for machine learning models. This step ensures that the data fed into the models is relevant and well-processed, improving the quality and accuracy of predictions.
+2. XGBoost Training
+Objective: Train a machine learning model using the XGBoost algorithm.
+Process: XGBoost (Extreme Gradient Boosting) is used for training a model to detect cyberattacks. This algorithm is known for its efficiency and scalability in handling large datasets. It applies gradient boosting techniques to create a powerful ensemble model that can make accurate predictions based on the features engineered during data preparation.
+3. Predict
+Objective: Perform real-time predictions on incoming data.
+Process: This pipeline is responsible for making online, real-time predictions using the trained XGBoost model. As new data flows into the system, this component analyzes it to identify potential cyber threats or anomalies. This real-time inference is crucial for timely detection and response to cyberattacks.
+4. Automatic Retraining
+Objective: Maintain and enhance model performance over time.
+Process: To ensure that the model remains effective as new data and threats emerge, this pipeline continuously gathers new training data and periodically retrains the model. Automatic retraining helps in adapting the model to changing patterns and maintaining high prediction accuracy. This step is essential for long-term reliability and effectiveness in detecting new types of cyber threats.
+5. Deploying to Production
+Objective: Deploy the trained model to a production environment.
+Process: This pipeline handles the deployment of the model and the associated infrastructure required for real-time predictions. It ensures that the model is operational and integrated within the IT systems where it will perform its detection duties.
+Summary
+The solution integrates several key processes:
+
+Data Preparation: Ensures data quality and relevance for model training.
+XGBoost Training: Utilizes a powerful machine learning technique for building a predictive model.
+Predict: Provides real-time detection capabilities to identify cyber threats.
+Automatic Retraining: Keeps the model updated and effective over time.
+Deploying to Production: Manages the deployment and operational aspects of the model.
+Together, these components form a robust system for detecting cyberattacks, continuously improving its performance, and adapting to new threats as they arise.
+
+
+
 # Getting Started
 
 Start locally with docker compose by running 
