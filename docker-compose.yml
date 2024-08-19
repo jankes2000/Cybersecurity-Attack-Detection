@@ -14,15 +14,10 @@ services:
       - 6789:6789
       - 6000:6000
     volumes:
-      # Mount your local codebase to the container.
       - .:/$MAGE_CODE_PATH
-      # Store the data output on local machine to easily debug (optional).
       - ~/.mage_data:/$MAGE_CODE_PATH/mage_data
-      # Initial credentials to create an IAM user with limited permissions for deployment.
       - ~/.aws:/root/.aws
-      # Local machine’s SSH keys to pull and push to your GitHub repository.
       - ~/.ssh:/root/.ssh:ro
-      # Local machine’s GitHub configs
       - ~/.gitconfig:/root/.gitconfig:ro
       - /Data:/app/data
     restart: on-failure:5
@@ -30,8 +25,8 @@ services:
       - app-network
     depends_on:
       - magic-database
-    stdin_open: true # used for interactive debugging
-    tty: true # used for interactive debugging
+    stdin_open: true
+    tty: true
 
 
   magic-database:
@@ -42,7 +37,6 @@ services:
       - 5432:5432
     volumes:
       - ~/.postgres/data:/var/lib/postgresql/data
-      # Custom database initialization scripts (optional).
       - ./scripts/database:/docker-entrypoint-initdb.d
     restart: always
     networks:
@@ -62,38 +56,38 @@ services:
     networks:
       - app-network
 
-  # db:
-  #   image: postgres
-  #   restart: always
-  #   environment:
-  #     POSTGRES_PASSWORD: example
-  #   ports:
-  #     - "5433:5432"
-  #   networks:
-  #     - back-tier
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: example
+    ports:
+      - "5433:5432"
+    networks:
+      - back-tier
 
-  # adminer:
-  #   image: adminer
-  #   restart: always
-  #   ports:
-  #     - "8080:8080"
-  #   networks:
-  #     - back-tier
-  #     - front-tier  
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - "8080:8080"
+    networks:
+      - back-tier
+      - front-tier  
 
-  # grafana:
-  #   image: grafana/grafana-enterprise
-  #   user: "472"
-  #   ports:
-  #     - "3000:3000"
-  #   volumes:
-  #     - ./config/grafana_datasources.yaml:/etc/grafana/provisioning/datasources/datasource.yaml:ro
-  #     - ./config/grafana_dashboards.yaml:/etc/grafana/provisioning/dashboards/dashboards.yaml:ro
-  #     - ./dashboards:/opt/grafana/dashboards
-  #   networks:
-  #     - back-tier
-  #     - front-tier
-  #   restart: always
+  grafana:
+    image: grafana/grafana-enterprise
+    user: "472"
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./config/grafana_datasources.yaml:/etc/grafana/provisioning/datasources/datasource.yaml:ro
+      - ./config/grafana_dashboards.yaml:/etc/grafana/provisioning/dashboards/dashboards.yaml:ro
+      - ./dashboards:/opt/grafana/dashboards
+    networks:
+      - back-tier
+      - front-tier
+    restart: always
 
 networks:
   app-network:
