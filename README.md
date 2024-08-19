@@ -78,12 +78,15 @@ Together, these components form a robust system for detecting cyberattacks, cont
 # Getting Started
 
 Start locally with docker compose by running 
-    ./scripts/start.sh
+```
+./scripts/start.sh
+```
+
 Access Services:
-Mage Platform: http://localhost:6789
-MLFlow: http://localhost:5000
-Adminer: http://localhost:8080
-Grafana: http://localhost:3000
+* Mage Platform: http://localhost:6789
+* MLFlow: http://localhost:5000
+* Adminer: http://localhost:8080
+* Grafana: http://localhost:3000
 
 Deploying the Project with Terraform
 If you prefer to deploy the project using Terraform in AWS for instance, follow these steps.
