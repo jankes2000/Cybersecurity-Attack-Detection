@@ -27,3 +27,29 @@ GitHub Actions is used for continuous integration and deployment, automating the
 Infrastructure as Code (IaC): Terraform
 
 Terraform is used to define and provision the cloud infrastructure in a scalable and repeatable manner.
+
+# Getting Started+
+
+Start locally with docker compose by running ./scripts/start.sh
+Access Services:
+Mage Platform: http://localhost:6789
+MLFlow: http://localhost:5000
+Adminer: http://localhost:8080
+Grafana: http://localhost:3000
+
+Deploying the Project with Terraform
+If you prefer to deploy the project using Terraform in Saturn Cloud for instance, follow these steps:
+
+Set Up Terraform Configuration: Ensure that your Terraform configuration files are properly set up to provision the required cloud resources.
+
+Initialize Terraform:
+
+
+    terraform init
+Apply Terraform Configuration:
+
+
+bash
+    apply
+
+Deploy the Project: Follow your cloud provider's specific instructions for deploying and managing services.
