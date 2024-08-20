@@ -11,7 +11,7 @@ from sklearn.metrics import mean_squared_error
 from mlops.utils.hyperparameters.shared import build_hyperparameters_space
 
 HYPERPARAMETERS_WITH_CHOICE_INDEX = [
-    'fit_intercept',
+    "fit_intercept",
 ]
 
 
@@ -25,7 +25,7 @@ def load_class(module_and_class_name: str) -> BaseEstimator:
         linear_model.LinearRegression
         svm.LinearSVR
     """
-    parts = module_and_class_name.split('.')
+    parts = module_and_class_name.split(".")
     cls = sklearn
     for part in parts:
         cls = getattr(cls, part)
@@ -99,7 +99,7 @@ def tune_hyperparameters(
                 predictions=predictions,
             )
 
-        return dict(loss=metrics['rmse'], status=STATUS_OK)
+        return dict(loss=metrics["rmse"], status=STATUS_OK)
 
     space, choices = build_hyperparameters_space(
         model_class,
@@ -123,9 +123,9 @@ def tune_hyperparameters(
 
     # fmin will return max_depth as a float for some reason
     for key in [
-        'max_depth',
-        'max_iter',
-        'min_samples_leaf',
+        "max_depth",
+        "max_iter",
+        "min_samples_leaf",
     ]:
         if key in best_hyperparameters:
             best_hyperparameters[key] = int(best_hyperparameters[key])

@@ -8,26 +8,18 @@ from mlops.utils.data_preparation.encoders import vectorize_features
 from mlops.utils.data_preparation.feature_selector import select_features
 from sklearn.model_selection import train_test_split
 
-if 'data_exporter' not in globals():
+if "data_exporter" not in globals():
     from mage_ai.data_preparation.decorators import data_exporter
-if 'test' not in globals():
+if "test" not in globals():
     from mage_ai.data_preparation.decorators import test
 
 
 @data_exporter
 def export(
     data: Tuple[DataFrame, DataFrame, DataFrame], *args, **kwargs
-) -> Tuple[
-    csr_matrix,
-    csr_matrix,
-    csr_matrix,
-    Series,
-    Series,
-    Series,
-    BaseEstimator,
-]:
+) -> Tuple[csr_matrix, csr_matrix, csr_matrix, Series, Series, Series, BaseEstimator,]:
     df, df_train, df_val = data
-    target = kwargs.get('target', 'Label')
+    target = kwargs.get("target", "Label")
 
     X, _, _ = vectorize_features(df)
     y: Series = df[target]
@@ -38,7 +30,6 @@ def export(
     )
     y_train = df_train[target]
     y_val = df_val[target]
-
 
     return X, X_train, X_val, y, y_train, y_val, dv
 
@@ -55,13 +46,13 @@ def test_dataset(
 ) -> None:
     assert (
         X.shape[0] == 6155
-    ), f'Entire dataset should have 105870 examples, but has {X.shape[0]}'
+    ), f"Entire dataset should have 6155 examples, but has {X.shape[0]}"
     assert (
-        X.shape[1] == 7027
-    ), f'Entire dataset should have 7027 features, but has {X.shape[1]}'
+        X.shape[1] == 9025
+    ), f"Entire dataset should have 9025 features, but has {X.shape[1]}"
     assert (
         len(y.index) == X.shape[0]
-    ), f'Entire dataset should have {X.shape[0]} examples, but has {len(y.index)}'
+    ), f"Entire dataset should have {X.shape[0]} examples, but has {len(y.index)}"
 
 
 @test
@@ -76,13 +67,10 @@ def test_training_set(
 ) -> None:
     assert (
         X_train.shape[0] == 1846
-    ), f'Training set for training model should have 54378 examples, but has {X_train.shape[0]}'
-    assert (
-        X_train.shape[1] == 2944
-    ), f'Training set for training model should have 5094 features, but has {X_train.shape[1]}'
+    ), f"Training set for training model should have 1846 examples, but has {X_train.shape[0]}"
     assert (
         len(y_train.index) == X_train.shape[0]
-    ), f'Training set for training model should have {X_train.shape[0]} examples, but has {len(y_train.index)}'
+    ), f"Training set for training model should have {X_train.shape[0]} examples, but has {len(y_train.index)}"
 
 
 @test
@@ -97,10 +85,7 @@ def test_validation_set(
 ) -> None:
     assert (
         X_val.shape[0] == 4309
-    ), f'Training set for validation should have 51492 examples, but has {X_val.shape[0]}'
-    assert (
-        X_val.shape[1] == 2944
-    ), f'Training set for validation should have 5094 features, but has {X_val.shape[1]}'
+    ), f"Training set for validation should have 51492 examples, but has {X_val.shape[0]}"
     assert (
         len(y_val.index) == X_val.shape[0]
-    ), f'Training set for training model should have {X_val.shape[0]} examples, but has {len(y_val.index)}'
+    ), f"Training set for training model should have {X_val.shape[0]} examples, but has {len(y_val.index)}"

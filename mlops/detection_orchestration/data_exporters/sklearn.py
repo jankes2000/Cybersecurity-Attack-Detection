@@ -3,11 +3,11 @@ from typing import Callable, Dict, Tuple, Union
 from pandas import Series
 from scipy.sparse._csr import csr_matrix
 from sklearn.base import BaseEstimator
-from sklearn.preprocessing import LabelEncoder 
+from sklearn.preprocessing import LabelEncoder
 
 from mlops.utils.models.sklearn import load_class, train_model
 
-if 'data_exporter' not in globals():
+if "data_exporter" not in globals():
     from mage_ai.data_preparation.decorators import data_exporter
 
 
@@ -23,11 +23,11 @@ def train(
 ) -> Tuple[BaseEstimator, Dict[str, str]]:
     hyperparameters, X, y, model_info = settings
 
-    if y.dtype == 'object':
+    if y.dtype == "object":
         label_encoder = LabelEncoder()
         y = label_encoder.fit_transform(y)
 
-    model_class = model_info['cls']
+    model_class = model_info["cls"]
     model = model_class(**hyperparameters)
     model.fit(X, y)
 

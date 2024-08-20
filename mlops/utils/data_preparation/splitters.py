@@ -29,12 +29,10 @@ def split_on_ratio(
     ratio: float,
     drop_feature: bool = True,
     return_indexes: bool = False,
-    random_state: int = None
+    random_state: int = None,
 ) -> Union[Tuple[DataFrame, DataFrame], Tuple[Index, Index]]:
     df_train, df_val = train_test_split(
-        df,
-        test_size=1-ratio,
-        random_state=random_state
+        df, test_size=1 - ratio, random_state=random_state
     )
 
     if return_indexes:

@@ -7,7 +7,7 @@ from sklearn.base import BaseEstimator
 from mlops.utils.models.sklearn import load_class, tune_hyperparameters
 from sklearn.preprocessing import LabelEncoder
 
-if 'transformer' not in globals():
+if "transformer" not in globals():
     from mage_ai.data_preparation.decorators import transformer
 
 
@@ -23,9 +23,9 @@ def hyperparameter_tuning(
     Series,
     Callable[..., BaseEstimator],
 ]:
-    X, X_train, X_val, y, y_train, y_val, _ = training_set['build']
+    X, X_train, X_val, y, y_train, y_val, _ = training_set["build"]
 
-    if y_train.dtype == 'object' or isinstance(y_train.iloc[0], str):
+    if y_train.dtype == "object" or isinstance(y_train.iloc[0], str):
         y_train = LabelEncoder().fit_transform(y_train)
         y_val = LabelEncoder().fit_transform(y_val)
 
@@ -37,8 +37,8 @@ def hyperparameter_tuning(
         y_train=y_train,
         X_val=X_val,
         y_val=y_val,
-        max_evaluations=kwargs.get('max_evaluations'),
-        random_state=kwargs.get('random_state'),
+        max_evaluations=kwargs.get("max_evaluations"),
+        random_state=kwargs.get("random_state"),
     )
 
     return hyperparameters, X, y, dict(cls=model_class, name=model_class_name)

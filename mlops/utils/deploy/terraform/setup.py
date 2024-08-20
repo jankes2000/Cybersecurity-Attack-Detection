@@ -34,7 +34,7 @@ def setup_configurations(
 
     docker_image = '"mageai/mageai:alpha"'
 
-    print('Updating variables in variables.tf')
+    print("Updating variables in variables.tf")
     print(f'  "app_name"            = {project_name}')
     print(f'  "docker_image"        = {docker_image}')
     print(f'  "enable_ci_cd"        = true')
@@ -46,14 +46,14 @@ def setup_configurations(
     )
 
     if prevent_destroy_ecr is not None:
-        variables['prevent_destroy_ecr'] = prevent_destroy_ecr
+        variables["prevent_destroy_ecr"] = prevent_destroy_ecr
         print(f'  "prevent_destroy_ecr" = {"true" if prevent_destroy_ecr else "false"}')
 
     update_variables(variables)
 
     update_json_file(
-        os.path.join(TERRAFORM_AWS_FULL_PATH, f'{ENV_VARS_KEY}.json'),
+        os.path.join(TERRAFORM_AWS_FULL_PATH, f"{ENV_VARS_KEY}.json"),
         [
-            dict(name='MAGE_PRESENTERS_DIRECTORY', value='mlops/presenters'),
+            dict(name="MAGE_PRESENTERS_DIRECTORY", value="mlops/presenters"),
         ],
     )

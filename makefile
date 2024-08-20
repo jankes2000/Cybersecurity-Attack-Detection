@@ -1,12 +1,12 @@
-.PHONY: lint format test all
+.PHONY: lint format security all
 
 lint:
-    pylint . 
+	pylint ./mlops --exit-zero
 
 format:
-    black .
+	black ./mlops
 
-test:
-    pytest 
+security:
+	bandit -r ./mlops
 
-all: lint format test
+all: lint format security

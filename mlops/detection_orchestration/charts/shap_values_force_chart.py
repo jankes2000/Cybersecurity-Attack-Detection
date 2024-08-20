@@ -13,12 +13,14 @@ from xgboost import Booster
 from mage_ai.shared.parsers import convert_matrix_to_dataframe
 
 
-@render(render_type='jpeg')
+@render(render_type="jpeg")
 def create_visualization(inputs: Tuple[Booster, csr_matrix, Series], *args, **kwargs):
     model, X, _ = inputs
 
     # Random sampling - for example, 10% of the data
-    sample_indices = np.random.choice(X.shape[0], size=int(X.shape[0] * 0.1), replace=False)
+    sample_indices = np.random.choice(
+        X.shape[0], size=int(X.shape[0] * 0.1), replace=False
+    )
     X_sampled = X[sample_indices]
     X_sampled = X[:1]
 
@@ -34,11 +36,11 @@ def create_visualization(inputs: Tuple[Booster, csr_matrix, Series], *args, **kw
     X = convert_matrix_to_dataframe(X)
 
     importance_df = pd.DataFrame([X.columns.tolist(), shap_sum.tolist()]).T
-    importance_df.columns = ['column_name', 'shap_importance']
-    importance_df = importance_df.sort_values('shap_importance', ascending=False)
+    importance_df.columns = ["column_name", "shap_importance"]
+    importance_df = importance_df.sort_values("shap_importance", ascending=False)
 
     # Get the names of the top 10 most important features
-    top_n_features = importance_df['column_name'].head(10).tolist()
+    top_n_features = importance_df["column_name"].head(10).tolist()
 
     # Reduce the original X to these top 10 features
     X_top_n = X[top_n_features]
@@ -51,11 +53,11 @@ def create_visualization(inputs: Tuple[Booster, csr_matrix, Series], *args, **kw
         explainer.expected_value,
         shap_values[idx, :][np.newaxis, X.columns.get_indexer(top_n_features)],
         X_top_n.iloc[idx, :],
-        matplotlib=True
+        matplotlib=True,
     )
 
     string_bytes = io.BytesIO()
-    plt.savefig(string_bytes, format='png')
+    plt.savefig(string_bytes, format="png")
     string_bytes.seek(0)
     image_str = base64.b64encode(string_bytes.read()).decode()
 

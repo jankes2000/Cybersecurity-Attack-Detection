@@ -29,7 +29,7 @@ ORDER BY runs.start_time ASC
 
 
 def load_data(*args, **kwargs) -> pd.DataFrame:
-    with sqlite3.connect(DEFAULT_TRACKING_URI.split('/')[-1]) as conn:
+    with sqlite3.connect(DEFAULT_TRACKING_URI.split("/")[-1]) as conn:
         cursor = conn.cursor()
 
         cursor.execute(QUERY)
@@ -42,10 +42,9 @@ def load_data(*args, **kwargs) -> pd.DataFrame:
             start_time_day = start_time.day
             start_time_hour = start_time.hour
             start_time_minute = start_time.minute
-            start_time_format_day = start_time.strftime('%Y-%m-%d')
-            start_time_format_hour = start_time.strftime('%Y-%m-%d %H:%M')
-            start_time_format_minute = start_time.strftime('%H:%MD%d')
-
+            start_time_format_day = start_time.strftime("%Y-%m-%d")
+            start_time_format_hour = start_time.strftime("%Y-%m-%d %H:%M")
+            start_time_format_minute = start_time.strftime("%H:%MD%d")
 
             data = dict(
                 model=model,
@@ -61,8 +60,8 @@ def load_data(*args, **kwargs) -> pd.DataFrame:
                 start_time_hour=start_time_hour,
                 start_time_minute=start_time_minute,
             )
-            data[f'mse_{model}'] = mse
-            data[f'rmse_{model}'] = rmse
+            data[f"mse_{model}"] = mse
+            data[f"rmse_{model}"] = rmse
 
             processed_rows.append(data)
 

@@ -10,8 +10,7 @@ from mlops.utils.data_preparation.feature_selector import select_features
 from mlops.utils.data_preparation.splitters import split_on_ratio
 
 
-
-if 'transformer' not in globals():
+if "transformer" not in globals():
     from mage_ai.data_preparation.decorators import transformer
 
 
@@ -19,20 +18,14 @@ if 'transformer' not in globals():
 def transform(
     df: pd.DataFrame, **kwargs
 ) -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
-    split_on_feature = kwargs.get('split_on_feature')
-    split_on_feature_value = kwargs.get('split_on_feature_value')
-    target = kwargs.get('target')
-    train_size = kwargs.get('train_size')
-
+    split_on_feature = kwargs.get("split_on_feature")
+    split_on_feature_value = kwargs.get("split_on_feature_value")
+    target = kwargs.get("target")
+    train_size = kwargs.get("train_size")
 
     classes = df[target]
     features = df.drop(columns=[target])
 
-    
-    df_train, df_val = split_on_ratio(
-        df,
-        0.3
-    )
-
+    df_train, df_val = split_on_ratio(df, 0.3)
 
     return df, df_train, df_val

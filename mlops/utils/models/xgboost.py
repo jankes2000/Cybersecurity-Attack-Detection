@@ -21,7 +21,7 @@ def fit_model(
     hyperparameters: Dict,
     verbose_eval: Union[bool, int] = 10,
 ) -> Booster:
-    num_boost_round = int(hyperparameters.pop('num_boost_round'))
+    num_boost_round = int(hyperparameters.pop("num_boost_round"))
 
     model, _, _ = train_model(
         training_set,
@@ -49,14 +49,14 @@ def train_model(
     num_boost_round: int = 1000,
     verbose_eval: Union[bool, int] = 10,
 ) -> Tuple[Booster, Dict[str, float], np.ndarray]:
-    if 'max_depth' in hyperparameters:
-        hyperparameters['max_depth'] = int(hyperparameters['max_depth'])
+    if "max_depth" in hyperparameters:
+        hyperparameters["max_depth"] = int(hyperparameters["max_depth"])
 
     model = xgb.train(
         hyperparameters,
         training_set,
         early_stopping_rounds=early_stopping_rounds,
-        evals=[(validation_set, 'validation')],
+        evals=[(validation_set, "validation")],
         num_boost_round=num_boost_round,
         verbose_eval=verbose_eval,
     )
@@ -90,7 +90,7 @@ def tune_hyperparameters(
     ) -> Dict[str, Union[float, str]]:
         # Separate the num_boost_round from the normal hyperparameters because it's not a
         # hyperparameter but instead a parameter of the train function.
-        num_boost_round = int(params.pop('num_boost_round'))
+        num_boost_round = int(params.pop("num_boost_round"))
 
         model, metrics, predictions = train_model(
             training_set,
@@ -109,7 +109,7 @@ def tune_hyperparameters(
                 predictions=predictions,
             )
 
-        return dict(loss=metrics['rmse'], status=STATUS_OK)
+        return dict(loss=metrics["rmse"], status=STATUS_OK)
 
     space, choices = build_hyperparameters_space(Booster, random_state=random_state)
 
@@ -128,8 +128,8 @@ def tune_hyperparameters(
             best_hyperparameters[key] = choices[key][idx]
 
     # fmin will return max_depth as a float for some reason
-    if 'max_depth' in best_hyperparameters:
-        best_hyperparameters['max_depth'] = int(best_hyperparameters['max_depth'])
+    if "max_depth" in best_hyperparameters:
+        best_hyperparameters["max_depth"] = int(best_hyperparameters["max_depth"])
 
     return best_hyperparameters
 
@@ -140,7 +140,7 @@ def load_model(model_dir: str, model_filename: str, config_filename: str) -> Boo
     model.load_model(model_path)
 
     config_path = os.path.join(model_dir, config_filename)
-    with open(config_path, 'r') as file:
+    with open(config_path, "r") as file:
         model_config = json.load(file)
 
     model_config_str = json.dumps(model_config)
